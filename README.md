@@ -1,6 +1,7 @@
 # facebook_v2
 
-//backend 
+backend
+```shell
 cd backend
 virtualenv env
 source env/bin/activate
@@ -9,8 +10,10 @@ cd src
 python manage.py makemigrations
 python manage.py migrate
 python manage.py runserver
-
-//frontend
+```
+frontend
+```shell
 cd frontend
 npm i
 npm start
+```
