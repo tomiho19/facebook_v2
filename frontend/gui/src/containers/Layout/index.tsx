@@ -37,7 +37,7 @@ const CustomLayout = (props: LayoutProps) => {
           </Menu>
         </Header>
         <Content style={{ padding: '0 50px', marginTop: '20px' }}>
-          <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
+          <div style={{ background: '#fff', padding: 24, minHeight: 750 }}>
               {props.children}
           </div>
         </Content>
