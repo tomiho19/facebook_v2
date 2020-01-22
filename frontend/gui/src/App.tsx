@@ -5,9 +5,12 @@ import { BrowserRouter as Router, Route, Redirect  } from "react-router-dom";
 import SignIn from "./containers/Pages/signin";
 import SignUp from "./containers/Pages/signup";
 import CustomLayout from "./containers/Layout";
-import FriendList from "./containers/Friends/list";
-import Detail from "./containers/Friends/detail";
-import AddNewFriend from "./components/Friend/addNewFriend";
+import StudentList from "./containers/Students/list";
+import CourseList from "./containers/Courses/list";
+import DetailStudent from "./containers/Students/detail";
+import DetailCourse from "./containers/Courses/detail";
+import AddNewStudent from "./components/Course/add";
+import AddNewCourse from "./components/Student/add";
 import openNotificationWithIcon from "./helpers/openNotificationWithIcon";
 import {connect} from 'react-redux';
 import * as actions from './store/actions/auth';
@@ -30,31 +33,59 @@ const App: React.FC = (props) => {
                         if(!loggedIn) {
                             openNotificationWithIcon('warning', 'Warning', 'Please log in');
                         }
-                        return loggedIn ? <Redirect to="/list"/> : <Redirect to="/signin"/>;
+                        // return loggedIn ? <Redirect to="/list"/> : <Redirect to="/signin"/>;
+                        return <Redirect to="/list"/>;
                     }}/>
                     <Route path="/signin" component={SignIn} />
                     <Route path="/signup" component={SignUp} />
-                    <Route path="/create" render={(props) => {
+                    <Route path="/create_student" render={(props) => {
                       if(!loggedIn) {
                          openNotificationWithIcon('warning', 'Warning', 'Please log in');
                       }
                       //@ts-ignore
-                      return loggedIn ? <AddNewFriend {...props}/> : <Redirect to="/signin"/>
+                      // return loggedIn ? <AddNewStudent {...props}/> : <Redirect to="/signin"/>
+                      return <AddNewStudent {...props}/>
                     }}/>
-                    <Route path="/list/:id" render={(props) => {
+                      <Route path="/create_course" render={(props) => {
+                          if(!loggedIn) {
+                              openNotificationWithIcon('warning', 'Warning', 'Please log in');
+                          }
+                          //@ts-ignore
+                          // return loggedIn ? <AddNewStudent {...props}/> : <Redirect to="/signin"/>
+                          return <AddNewCourse {...props}/>
+                      }}/>
+                    <Route path="/list_of_students/:id" render={(props) => {
                         if(!loggedIn) {
                           openNotificationWithIcon('warning', 'Warning', 'Please log in');
                         }
                                                 //@ts-ignore
-                        return loggedIn ? <Detail {...props}/> : <Redirect to="/signin"/>
+                        // return loggedIn ? <Detail {...props}/> : <Redirect to="/signin"/>
+                        return <DetailStudent {...props}/>
                     }}/>
-                    <Route path="/list/" render={(props) => {
+                      <Route path="/list_of_courses/:id" render={(props) => {
+                          if(!loggedIn) {
+                              openNotificationWithIcon('warning', 'Warning', 'Please log in');
+                          }
+                          //@ts-ignore
+                          // return loggedIn ? <Detail {...props}/> : <Redirect to="/signin"/>
+                          return <DetailCourse {...props}/>
+                      }}/>
+                    <Route path="/list_of_students/" render={(props) => {
                         if(!loggedIn) {
                           openNotificationWithIcon('warning', 'Warning', 'Please log in');
                         }
                         //@ts-ignore
-                        return loggedIn ? <FriendList {...props}/> : <Redirect to="/signin"/>
+                        // return loggedIn ? <StudentList {...props}/> : <Redirect to="/signin"/>
+                        return <StudentList {...props}/>;
                     }}/>
+                      <Route path="/list_of_courses/" render={(props) => {
+                          if(!loggedIn) {
+                              openNotificationWithIcon('warning', 'Warning', 'Please log in');
+                          }
+                          //@ts-ignore
+                          // return loggedIn ? <StudentList {...props}/> : <Redirect to="/signin"/>
+                          return <CourseList {...props}/>;
+                      }}/>
                   </div>
             </CustomLayout>
         </Router>

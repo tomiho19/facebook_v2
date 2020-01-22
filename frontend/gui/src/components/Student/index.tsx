@@ -1,22 +1,21 @@
 import React, {useState} from "react";
 import {Link} from "react-router-dom";
+import EditModal from "./edit";
 
 import {List, Skeleton, Avatar, Popconfirm, message, notification} from 'antd';
 import openNotificationWithIcon from "../../helpers/openNotificationWithIcon";
-import axios from 'axios';
-import EditModal from "./modals/edit";
 
-export interface FriendEntity {
+export interface StudentEntity {
     first_name: string,
     last_name: string,
     birth_date: string,
-    id: number,
+    id: string,
     setUpdate: Function
-}
+};
 
 
 
-const Friend = (item: FriendEntity) => {
+const Student = (item: StudentEntity) => {
     function showEditModal() {
         setEditVisible(true)
     }
@@ -25,20 +24,36 @@ const Friend = (item: FriendEntity) => {
         setEditVisible(false);
     }
 
+    function get_students_list(){
+        let storage_value = localStorage.getItem('students_list');
+        if(storage_value){
+            try {
+                return JSON.parse(storage_value)
+            } catch (e) {
+                return []
+            }
+        }
+        return []
+    }
+
+    function set_student_list (new_values: Array<any>){
+        try {
+            localStorage.setItem('students_list', JSON.stringify(new_values))
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     function onDelete() {
-        let config = {
-      headers: { Authorization: "bearer " + localStorage.getItem('token') }
-    };
-        axios.delete(`http://127.0.0.1:8000/api/${item.id}/`, config)
-            .then(
-                response => {
-                    item.setUpdate(true);
-                    openNotificationWithIcon('success', 'Success', 'Friend has been successfully deleted');
-                },
-                error => {
-                    openNotificationWithIcon('error', 'Error', 'Error has been encountered while trying to delete');
-                }
-            );
+        let list = get_students_list();
+        for( let i = 0; i < list.length; i++){
+            if ( list[i].id === item.id) {
+                list.splice(i, 1);
+            }
+        }
+        set_student_list(list);
+        item.setUpdate(true);
+        openNotificationWithIcon('success', 'Success', 'Student has been successfully deleted');
     }
 
     const [editVisible, setEditVisible] = useState(false);
@@ -73,4 +88,4 @@ const Friend = (item: FriendEntity) => {
           </List.Item>
 };
 
-export default Friend;
+export default Student;

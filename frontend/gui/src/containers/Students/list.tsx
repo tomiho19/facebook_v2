@@ -1,35 +1,39 @@
 import React, { useState , useEffect} from 'react';
-import Friend from "../../components/Friend";
+import Student from "../../components/Student";
 import { List} from 'antd';
 import axios from 'axios';
 
-export interface FriendEntity {
+export interface StudentEntity {
     first_name: string,
     last_name: string,
     birth_date: string,
-    id: number
+    id: string
 }
 
+const get_students_list = () => {
+    let storage_value = localStorage.getItem('students_list');
+    if(storage_value){
+        try {
+            return JSON.parse(storage_value)
+        } catch (e) {
+            return []
+        }
+    }
+    return []
+};
+
 // @ts-ignore
-const FriendList: React.FC = () => {
+const StudentList: React.FC = () => {
     const [list, setList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [shouldUpdate, setUpdate] = useState(true);
     // @ts-ignore
     useEffect(() => {
         if(shouldUpdate){
-            axios.get('http://127.0.0.1:8000/api/')
-            .then(
-                response => {
-                    setList(response.data);
-                    setLoading(false);
-                    setUpdate(false);
-                },
-                error => {
-                    setLoading(false);
-                    setUpdate(false);
-                }
-            )
+            const list = get_students_list()
+            setList(list);
+            setLoading(false);
+            setUpdate(false);
         }
     }, [shouldUpdate]);
     //@ts-ignore
@@ -39,9 +43,9 @@ const FriendList: React.FC = () => {
         loading={loading}
         dataSource={list}
         //@ts-ignore
-        renderItem={(item: FriendEntity, index) => <Friend id={index + 1} {...item} setUpdate={setUpdate}/>}
+        renderItem={(item: StudentEntity, index) => <Student id={index + 1} {...item} setUpdate={setUpdate}/>}
         pagination={{pageSize: 3}}
         />
 };
 
-export default FriendList;
+export default StudentList;

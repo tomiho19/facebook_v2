@@ -28,12 +28,19 @@ const CustomLayout = (props: LayoutProps) => {
             <Menu.Item key="/signup">
                 <Link to={'/signup'}>Sign up</Link>
             </Menu.Item>
-            <Menu.Item key="/list">
-                <Link to={'/list'}>List of friends</Link>
+            <Menu.Item key="/list_of_students">
+                <Link to={'/list_of_students'}>List of students</Link>
             </Menu.Item>
-            <Menu.Item key="/create">
-                <Link to={'/create'}>Create new friend</Link>
+              <Menu.Item key="/list_of_courses">
+                  <Link to={'/list_of_courses'}>List of courses</Link>
+              </Menu.Item>
+              <Menu.Item key="/create_course">
+                  <Link to={'/create_course'}>Create new student</Link>
+              </Menu.Item>
+            <Menu.Item key="/create_student">
+                <Link to={'/create_student'}>Create new course</Link>
             </Menu.Item>
+
           </Menu>
         </Header>
         <Content style={{ padding: '0 50px', marginTop: '20px' }}>
